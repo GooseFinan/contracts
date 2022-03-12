@@ -653,12 +653,6 @@ contract EggGenesisRewardPool {
         _;
     }
 
-    function checkPoolDuplicate(IERC20 _token) internal view {
-        uint256 length = poolInfo.length;
-        for (uint256 pid = 0; pid < length; ++pid) {
-            require(poolInfo[pid].token != _token, "EggGenesisPool: existing pool?");
-        }
-    }
 
     // Add a new token to the pool. Can only be called by the owner.
     function add(
@@ -668,7 +662,6 @@ contract EggGenesisRewardPool {
         uint256 _depositFee,
         uint256 _lastRewardTime
     ) public onlyOperator {
-        checkPoolDuplicate(_token);
         if (_withUpdate) {
             massUpdatePools();
         }
