@@ -1,3 +1,10 @@
+/***
+ ██████╗  ██████╗  ██████╗ ███████╗███████╗███████╗██╗███╗   ██╗ █████╗ ███╗   ██╗ ██████╗███████╗
+██╔════╝ ██╔═══██╗██╔═══██╗██╔════╝██╔════╝██╔════╝██║████╗  ██║██╔══██╗████╗  ██║██╔════╝██╔════╝
+██║  ███╗██║   ██║██║   ██║███████╗█████╗  █████╗  ██║██╔██╗ ██║███████║██╔██╗ ██║██║     █████╗  
+██║   ██║██║   ██║██║   ██║╚════██║██╔══╝  ██╔══╝  ██║██║╚██╗██║██╔══██║██║╚██╗██║██║     ██╔══╝  
+╚██████╔╝╚██████╔╝╚██████╔╝███████║███████╗██║     ██║██║ ╚████║██║  ██║██║ ╚████║╚██████╗███████╗
+***/
 
 // SPDX-License-Identifier: MIT
 
@@ -687,14 +694,15 @@ contract EggGenesisRewardPool {
         }
     }
 
-    // Update the given pool's EGG allocation point. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _allocPoint) public onlyOperator {
+    // Update the given pool's EGG allocation point and deposit fee. Can only be called by the owner.
+    function set(uint256 _pid, uint256 _allocPoint, uint256 _depositFee) public onlyOperator {
         massUpdatePools();
         PoolInfo storage pool = poolInfo[_pid];
         if (pool.isStarted) {
             totalAllocPoint = totalAllocPoint.sub(pool.allocPoint).add(_allocPoint);
         }
         pool.allocPoint = _allocPoint;
+        pool.depositFee = _depositFee;
     }
 
     // Return accumulate rewards over the given _from to _to block.
